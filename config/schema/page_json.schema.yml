@@ -1,0 +1,7 @@
+page_json.settings:
+  type: config_object
+  label: 'Site API'
+  mapping:
+    siteapikey:
+      type: string
+      label: 'Site API Key'

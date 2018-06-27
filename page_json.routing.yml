@@ -1,0 +1,24 @@
+# Route for Page Serialiser
+page_json.page_serialiser:
+  # The URL to the route.
+  path: '/page_json/{siteapikey}/{node}'
+  defaults:
+    # Callable method/function
+    _controller: '\Drupal\page_json\Controller\PageSerializer::getJSON'
+    # The page title for the route.
+    _title: 'Page JSON'
+  # Incoming resquest is GET.
+  methods: [GET]
+  requirements:
+    # Ensure user has access to view the node passed in.
+    _custom_access: '\Drupal\page_json\Controller\PageSerializer::checkAccess'
+    # Setting type of request. Here we are setting this as json so the
+    # response will be json format.
+    _format: 'json'
+    node: \d+
+  options:
+    parameters:
+      siteapikey:
+        type: String
+      node:
+        type: entity:node

@@ -1,0 +1,64 @@
+<?php
+/**
+ * @file
+ * Alters and store the Site API key.
+ */
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\Component\Utility\Unicode;
+
+/**
+ * Implements hook_form_FORM_ID_alter().
+ *
+ * Adds Site API Key field.
+ */
+function page_json_form_system_site_information_settings_alter(&$form, FormStateInterface $form_state, $form_id) {
+  $form['page_json'] = [
+    '#type' => 'details',
+    '#title' => t('Site API'),
+    '#open' => TRUE,
+  ];
+  $form['page_json']['site_api_key'] = [
+    '#type' => 'textfield',
+    '#title' => t('API Key'),
+    '#description' => t('Please enter API key to store. Please consider followings, <br/> &nbsp;&nbsp; 1. Lenght should be greater than 40 characters.<br/> &nbsp;&nbsp; 2. Should not contain whitespaces.'),
+    '#default_value' => \Drupal::config('page_json.settings')->get('siteapikey'),
+    '#required' => TRUE,
+  ];
+
+  $form['actions']['submit']['#value'] = t('Update configuration');
+  $form['actions']['submit']['#submit'][] = 'page_json_system_site_information_settings_submit';
+  $form['#validate'][] = 'page_json_system_site_information_settings_form_validate';
+}
+
+/**
+ * Custom form validation handler for system_site_information_settings form.
+ *
+ * @see page_json_system_site_information_settings_form_validate()
+ */
+function page_json_system_site_information_settings_form_validate($form, FormStateInterface $form_state) {
+
+  $site_api_key = $form_state->getValue('site_api_key');
+
+  if (Unicode::strlen($site_api_key) < 40) {
+    $form_state->setErrorByName('site_api_key', t('API key must be 40 or more characters long.'));
+  }
+
+  if ( preg_match('/\s/', $site_api_key) ) {
+    $form_state->setErrorByName('site_api_key', t('API key should not contain whitespaces.'));
+  }
+}
+
+/**
+ * Custom form submission handler for system_site_information_settings form.
+ *
+ * @see page_json_system_site_information_settings_form_validate()
+ */
+function page_json_system_site_information_settings_submit($form, FormStateInterface $form_state) {
+
+  $site_api_key = $form_state->getValue('site_api_key');
+  \Drupal::configFactory()->getEditable('page_json.settings')
+    ->set('siteapikey', $site_api_key)
+    ->save();
+
+}
