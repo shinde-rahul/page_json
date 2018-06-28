@@ -8,6 +8,7 @@ use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Access\AccessResult;
 
 use Symfony\Component\HttpFoundation\Response;
+use Drupal\Core\State\StateInterface;
 
 use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 use Symfony\Component\Serializer\SerializerInterface;
@@ -33,14 +34,22 @@ class PageSerializer extends ControllerBase {
   protected $configFactory;
 
   /**
+   * The state keyvalue collection.
+   *
+   * @var \Drupal\Core\State\StateInterface
+   */
+  protected $state;
+
+  /**
    * EntitySerializer constructor.
    *
    * @param \Symfony\Component\Serializer\SerializerInterface $serializer_interface
    *   Dependency.
    */
-  public function __construct(SerializerInterface $serializer_interface, ConfigFactory $config_factory) {
+  public function __construct(SerializerInterface $serializer_interface, ConfigFactory $config_factory, StateInterface $state) {
     $this->serializer = $serializer_interface;
     $this->configFactory = $config_factory;
+    $this->state = $state;
   }
 
   /**
@@ -49,7 +58,8 @@ class PageSerializer extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('serializer'),
-      $container->get('config.factory')
+      $container->get('config.factory'),
+      $container->get('state')
     );
   }
 
@@ -64,10 +74,9 @@ class PageSerializer extends ControllerBase {
    *   An access result.
    */
   public function checkAccess($siteapikey, Node $node) {
-    if ($siteapikey != $this->configFactory->get('page_json.settings')->get('siteapikey')
+    if ($siteapikey != $this->state->get('page_json.siteapikey')
         || $node->getType() != 'page') {
-      $test = $this->configFactory->get('page_json.settings')->get('siteapikey');
-      throw new AccessDeniedHttpException('Access Denied!!!' . $test);
+      throw new AccessDeniedHttpException('Access Denied!!!');
     }
 
     $account = $this->currentUser();

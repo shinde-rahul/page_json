@@ -13,6 +13,7 @@ use Drupal\Component\Utility\Unicode;
  * Adds Site API Key field.
  */
 function page_json_form_system_site_information_settings_alter(&$form, FormStateInterface $form_state, $form_id) {
+
   $form['page_json'] = [
     '#type' => 'details',
     '#title' => t('Site API'),
@@ -22,7 +23,7 @@ function page_json_form_system_site_information_settings_alter(&$form, FormState
     '#type' => 'textfield',
     '#title' => t('API Key'),
     '#description' => t('Please enter API key to store. Please consider followings, <br/> &nbsp;&nbsp; 1. Lenght should be greater than 40 characters.<br/> &nbsp;&nbsp; 2. Should not contain whitespaces.'),
-    '#default_value' => \Drupal::config('page_json.settings')->get('siteapikey'),
+    '#default_value' => \Drupal::state()->get('page_json.siteapikey', 'No API Key yet'),
     '#required' => TRUE,
   ];
 
@@ -57,8 +58,6 @@ function page_json_system_site_information_settings_form_validate($form, FormSta
 function page_json_system_site_information_settings_submit($form, FormStateInterface $form_state) {
 
   $site_api_key = $form_state->getValue('site_api_key');
-  \Drupal::configFactory()->getEditable('page_json.settings')
-    ->set('siteapikey', $site_api_key)
-    ->save();
+  \Drupal::state()->set('page_json.siteapikey', $site_api_key);
 
 }

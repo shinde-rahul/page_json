@@ -1,0 +1,15 @@
+<?php
+
+/**
+ * @file
+ * Contains install and update functions for Page JSON.
+ */
+
+use Drupal\Core\Cache\Cache;
+
+/**
+ * Implements hook_install().
+ */
+function page_json_uninstall() {
+  \Drupal::state()->delete('page_json.siteapikey');
+}
