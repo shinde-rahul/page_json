@@ -1,6 +1,7 @@
 # Page JSON
 
 Page JSON module help serving content/node of Page content type in JSON format.
+We have used the D8's Configuration API to store **Site API key**
 
 # USAGE
 ## Admin
@@ -20,8 +21,6 @@ Replace,
 * {node} with the valid node id
 
 
-MAINTAINERS
-==========
-
+# MAINTAINERS
 ## Current maintainers:
  * Rahul Shinde - https://www.drupal.org/u/rahulshinde
