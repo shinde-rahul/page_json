@@ -88,8 +88,7 @@ class PageSerializer extends ControllerBase {
    */
   public function getJSON($siteapikey, Node $node) {
     $serialized_node = $this->serializer->serialize($node, 'json');
-    $response = new Response();
-    $response->setContent($serialized_node);
+    $response = new Response($serialized_node);
     return $response;
   }
 
