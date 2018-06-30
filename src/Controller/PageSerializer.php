@@ -66,8 +66,7 @@ class PageSerializer extends ControllerBase {
   public function checkAccess($siteapikey, Node $node) {
     if ($siteapikey != $this->configFactory->get('page_json.settings')->get('siteapikey')
         || $node->getType() != 'page') {
-      $test = $this->configFactory->get('page_json.settings')->get('siteapikey');
-      throw new AccessDeniedHttpException('Access Denied!!!' . $test);
+      throw new AccessDeniedHttpException('Access Denied!!!');
     }
 
     $account = $this->currentUser();
