@@ -72,12 +72,10 @@ class PageSerializer extends ControllerBase {
     $account = $this->currentUser();
 
     // Check if the user has the proper permissions.
-    if ($node->access('access content', $account) === TRUE) {
-      return AccessResult::allowed();
-    }
-    elseif ($node->access('access content', $account) === FALSE) {
+    if ($node->access('access content', $account) === FALSE) {
       return AccessResult::forbidden('Access Denied!!!');
     }
+    return AccessResult::allowed();
   }
 
   /**
