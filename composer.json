@@ -1,0 +1,49 @@
+
+{
+    "name": "drupal/page_json",
+    "description": "Page JSON module help serving content/node of Page content type in JSON format.",
+    "type": "project",
+    "license": "GPL-2.0",
+    "authors": [
+        {
+            "name": "shinde-rahul",
+            "email": "shinde.r.a@gmail.com",
+            "role": "Drupal Developer"
+        }
+
+    ],
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://packages.drupal.org/8"
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "contrib/page_json",
+                "version": "8.0.x",
+                "type":"drupal-module",
+                "source": {
+                    "url": "https://github.com/shinde-rahul/page_json",
+                    "type": "git",
+                    "reference": "8.0.x"
+                }
+            }
+        }
+    ],
+    "require": {
+        "composer/installers": "^1.2"
+    },
+    "require-dev": {},
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "extra": {
+        "installer-paths": {
+            "docroot/libraries/{$name}": ["type:drupal-library"],
+            "docroot/modules/contrib/{$name}": ["type:drupal-module"],
+            "docroot/profiles/contrib/{$name}": ["type:drupal-profile"],
+            "docroot/themes/contrib/{$name}": ["type:drupal-theme"]
+        }
+    }
+}
+
