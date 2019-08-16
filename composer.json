@@ -2,15 +2,15 @@
 {
     "name": "shinde-rahul/page_json",
     "description": "Page JSON module help serving content/node of Page content type in JSON format.",
-    "type": "project",
-    "license": "GPL-2.0",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
     "authors": [
         {
-            "name": "shinde-rahul",
+            "name": "Rahul Shinde",
             "email": "shinde.r.a@gmail.com",
-            "role": "Drupal Developer"
+            "homepage": "https://www.rahulshinde.name/",
+            "role": "Developer"
         }
-
     ],
     "repositories": [
         {
@@ -46,4 +46,3 @@
         }
     }
 }
-
