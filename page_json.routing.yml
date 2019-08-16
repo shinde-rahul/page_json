@@ -7,7 +7,7 @@ page_json.page_serialiser:
     _controller: '\Drupal\page_json\Controller\PageSerializer::getJSON'
     # The page title for the route.
     _title: 'Page JSON'
-  # Incoming resquest is GET.
+  # Incoming request is GET.
   methods: [GET]
   requirements:
     # Ensure user has access to view the node passed in.
