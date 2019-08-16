@@ -36,7 +36,9 @@ class PageSerializer extends ControllerBase {
    * EntitySerializer constructor.
    *
    * @param \Symfony\Component\Serializer\SerializerInterface $serializer_interface
-   *   Dependency.
+   *   The serializer.
+   * @param \Drupal\Core\Config\ConfigFactory $config_factory
+   *   The factory for configuration objects.
    */
   public function __construct(SerializerInterface $serializer_interface, ConfigFactory $config_factory) {
     $this->serializer = $serializer_interface;
@@ -56,10 +58,11 @@ class PageSerializer extends ControllerBase {
   /**
    * Access check for the page serializer route.
    *
-   * @param  String $siteapikey
-   *   The string containing the site api key
-   * @param  Node $node
-   *   The Nodeobject
+   * @param string $siteapikey
+   *   The string containing the site api key.
+   * @param \Drupal\node\Entity\Node $node
+   *   The node entity.
+   *
    * @return mixed
    *   An access result.
    */
@@ -79,10 +82,12 @@ class PageSerializer extends ControllerBase {
   }
 
   /**
-   * @param  String $siteapikey
-   *   The string containing the site api key
-   * @param  Node $node
-   *   The Nodeobject
+   * Get the JSON for given node.
+   *
+   * @param string $siteapikey
+   *   The string containing the site api key.
+   * @param \Drupal\node\Entity\Node $node
+   *   The node entity.
    *
    * @return \Symfony\Component\HttpFoundation\Response
    *   Response object contains serialized reference data.

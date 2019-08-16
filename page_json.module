@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @file
  * Alters and store the Site API key.
@@ -44,7 +45,7 @@ function page_json_system_site_information_settings_form_validate($form, FormSta
     $form_state->setErrorByName('site_api_key', t('API key must be 40 or more characters long.'));
   }
 
-  if ( preg_match('/\s/', $site_api_key) ) {
+  if (preg_match('/\s/', $site_api_key)) {
     $form_state->setErrorByName('site_api_key', t('API key should not contain whitespaces.'));
   }
 }

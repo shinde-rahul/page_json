@@ -3,5 +3,5 @@ type: module
 description: Custom RESTful API module with GET method with token.
 core: 8.x
 dependencies:
-  - node
-  - serialization
+  - drupal:node
+  - drupal:serialization
