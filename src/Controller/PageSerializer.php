@@ -4,7 +4,6 @@ namespace Drupal\page_json\Controller;
 
 use Drupal\Core\Controller\ControllerBase;
 use Drupal\node\Entity\Node;
-use Drupal\Core\Config\ConfigFactory;
 use Drupal\Core\Access\AccessResult;
 
 use Symfony\Component\HttpFoundation\Response;
@@ -27,13 +26,6 @@ class PageSerializer extends ControllerBase {
   protected $serializer;
 
   /**
-   * Drupal's config factory class.
-   *
-   * @var \Drupal\Core\Config\ConfigFactory
-   */
-  protected $configFactory;
-
-  /**
    * The state keyvalue collection.
    *
    * @var \Drupal\Core\State\StateInterface
@@ -44,11 +36,12 @@ class PageSerializer extends ControllerBase {
    * EntitySerializer constructor.
    *
    * @param \Symfony\Component\Serializer\SerializerInterface $serializer_interface
-   *   Dependency.
+   *   The serializer.
+   * @param \Drupal\Core\State\StateInterface $state
+   *   The state service.
    */
-  public function __construct(SerializerInterface $serializer_interface, ConfigFactory $config_factory, StateInterface $state) {
+  public function __construct(SerializerInterface $serializer_interface, StateInterface $state) {
     $this->serializer = $serializer_interface;
-    $this->configFactory = $config_factory;
     $this->state = $state;
   }
 
@@ -58,7 +51,6 @@ class PageSerializer extends ControllerBase {
   public static function create(ContainerInterface $container) {
     return new static(
       $container->get('serializer'),
-      $container->get('config.factory'),
       $container->get('state')
     );
   }
@@ -66,10 +58,11 @@ class PageSerializer extends ControllerBase {
   /**
    * Access check for the page serializer route.
    *
-   * @param  String $siteapikey
-   *   The string containing the site api key
-   * @param  Node $node
-   *   The Nodeobject
+   * @param string $siteapikey
+   *   The string containing the site api key.
+   * @param \Drupal\node\Entity\Node $node
+   *   The node entity.
+   *
    * @return mixed
    *   An access result.
    */
@@ -89,10 +82,12 @@ class PageSerializer extends ControllerBase {
   }
 
   /**
-   * @param  String $siteapikey
-   *   The string containing the site api key
-   * @param  Node $node
-   *   The Nodeobject
+   * Get the JSON for given node.
+   *
+   * @param string $siteapikey
+   *   The string containing the site api key.
+   * @param \Drupal\node\Entity\Node $node
+   *   The node entity.
    *
    * @return \Symfony\Component\HttpFoundation\Response
    *   Response object contains serialized reference data.

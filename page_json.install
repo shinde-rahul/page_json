@@ -5,8 +5,6 @@
  * Contains install and update functions for Page JSON.
  */
 
-use Drupal\Core\Cache\Cache;
-
 /**
  * Implements hook_install().
  */
